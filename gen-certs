@@ -1,23 +1,33 @@
 #!/usr/bin/env zsh
 
+##
+local _pwd="`pwd`"
+
 ## config
 local conf="./config"
 
+## load config
+. ${conf}
 
-## generate certs
-printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n" \
-  ${_C[certConf][country]} \ 
-  ${_C[certConf][state]} \ 
-  ${_C[certConf][city]} \ 
-  ${_C[certConf][company]} \ 
-  ${_C[certConf][ou]} \ 
-  ${_C[certConf][commonName]} \ 
-  ${_C[certConf][email]} #\ 
+## create temp dir
+mkdir -p ${_C[keysPath]}
+cd ${_C[keysPath]}
 
-# | openssl 
-#     req -x509 \
-#     -nodes \
-#     -days 365 \
-#     -newkey rsa:${_C[certKeyBits]} \
-#     -keyout ${_C[keysPath]}/${_C[privateKey]} \
-#     -out ${_C[keysPath]}/${_C[publicKey]}
+## cert subject
+local _certSubj="/C=${_certConf[country]}/ST=${_certConf[state]}/L=${_certConf[city]}/O=${_certConf[company]}/OU=${_certConf[ou]}/CN=${_certConf[commonName]}/emailAddress=${_certConf[email]}" 
+
+## gen certs
+openssl \
+  req \
+  -newkey rsa:${_C[certKeyBits]} -nodes \
+  -keyout ${_C[privateKey]} \
+  -x509 -days 36500 -out ${_C[publicKey]} \
+  -subj "${_certSubj}"
+
+
+## check certificate
+openssl x509 -text -noout -in ${_C[publicKey]}
+
+printf "\n/i/ your keys are here now: ${_C[keysPath]} ..\n"
+
+cd ${_pwd}

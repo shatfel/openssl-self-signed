@@ -10,10 +10,10 @@ _certConf=(
   ##certConf "RU\nMO\nMoscow\npron\ns3\ns3.pron.es\nshatfel@gmail.com\n"
   country "RU"
   state "MO"
-  city "Moscow"
+  city "MSK"
   company "pron.su"
-  ou "organization-unit"
-  commonName "commonName"
+  ou "organizationUnit"
+  commonName "pron.su"
   email "shatfel@gmail.com"
   )
 
@@ -23,11 +23,8 @@ _C=(
   ## cert
   certKeyBits 4096
 
-  ## cert params
-  certConf ${certConf}
-
   ## keys
   keysPath "/tmp/gen-certs.$$"
   privateKey "private.key"
-  publicKey "public.key"
+  publicKey "public.crt"
   )
