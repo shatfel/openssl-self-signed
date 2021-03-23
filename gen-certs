@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+## config
+local conf="./config"
+
+
+## generate certs
+printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n" \
+  ${_C[certConf][country]} \ 
+  ${_C[certConf][state]} \ 
+  ${_C[certConf][city]} \ 
+  ${_C[certConf][company]} \ 
+  ${_C[certConf][ou]} \ 
+  ${_C[certConf][commonName]} \ 
+  ${_C[certConf][email]} #\ 
+
+# | openssl 
+#     req -x509 \
+#     -nodes \
+#     -days 365 \
+#     -newkey rsa:${_C[certKeyBits]} \
+#     -keyout ${_C[keysPath]}/${_C[privateKey]} \
+#     -out ${_C[keysPath]}/${_C[publicKey]}

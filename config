@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+
+## configs
+typeset -A _C
+typeset -A _certConf
+
+
+## certificate config
+_certConf=(
+  ##certConf "RU\nMO\nMoscow\npron\ns3\ns3.pron.es\nshatfel@gmail.com\n"
+  country "RU"
+  state "MO"
+  city "Moscow"
+  company "pron.su"
+  ou "organization-unit"
+  commonName "commonName"
+  email "shatfel@gmail.com"
+  )
+
+
+## config
+_C=(
+  ## cert
+  certKeyBits 4096
+
+  ## cert params
+  certConf ${certConf}
+
+  ## keys
+  keysPath "/tmp/gen-certs.$$"
+  privateKey "private.key"
+  publicKey "public.key"
+  )
